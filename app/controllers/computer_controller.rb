@@ -26,23 +26,23 @@ class ComputerController < ApplicationController
     end
 
     def add_numbers(arr)
-        arr.each do |num|
-            @number = @number + num
-        end
+        @number = loop(arr, @number)
         return @number
     end
 
     def substract_numbers(numbers_a, numbers_b)
         total_a = 0
         total_b = 0
-        numbers_a.each do |a|
-            total_a = total_a + a
-        end
-
-        numbers_b.each do |b|
-            total_b = total_b + b
-        end
+        total_a = loop(numbers_a, total_a)
+        total_b = loop(numbers_b, total_b)
         return total_a - total_b
+    end
+
+    def loop(array, total)
+        array.each do |a|
+            total = total + a
+        end
+        return total
     end
 
 end
