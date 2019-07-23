@@ -9,6 +9,7 @@ class ComputerControllerTest < ActionDispatch::IntegrationTest
   value = "Computer can return value"
   data_size = "Computer can calculate data size"
   data_storage = "Computer can store array data"
+  data_delete = "Computer can delete stored array data"
 
 
   def message(status="", message="")
@@ -35,17 +36,6 @@ class ComputerControllerTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test data_size do 
-    begin
-      data = ["a","b","c"]
-      size = computer.size(data)
-      assert_equal 3, size
-      puts message(success, data_size).green
-    rescue => err
-      puts message(failed, err.to_s).red
-    end
-  end
-
   test data_storage do 
     begin
       storage = computer.store(1)
@@ -53,6 +43,32 @@ class ComputerControllerTest < ActionDispatch::IntegrationTest
       storage = computer.store(3)
       assert_equal [1,2,3], storage
       puts message(success, data_storage).green
+    rescue => err
+      puts message(failed, err.to_s).red
+    end
+  end
+
+  test data_delete do 
+    begin
+      storage = computer.store(1)
+      storage = computer.store(2)
+      storage = computer.store(3)
+      storage = computer.delete(2)
+      assert_equal [1,3], storage
+      puts message(success, data_delete).green
+    rescue => err
+      puts message(failed, err.to_s).red
+    end
+  end
+
+  test data_size do 
+    begin
+      storage = computer.store(1)
+      storage = computer.store(2)
+      storage = computer.store(3)
+      size = computer.size(storage)
+      assert_equal 3, size
+      puts message(success, data_size).green
     rescue => err
       puts message(failed, err.to_s).red
     end

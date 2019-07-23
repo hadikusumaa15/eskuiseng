@@ -1,7 +1,7 @@
 class ComputerController < ApplicationController
-    require 'colorize'
     def initialize()
         @data = []
+        @size = 0
     end
 
     def play(input=nil)
@@ -9,16 +9,18 @@ class ComputerController < ApplicationController
     end
 
     def size(data=[])
-        if data.class == Array
-            return data.length
-        else
-            return "invalid input"
-        end
+        return @size
     end
 
     def store(input)
-        puts @data.to_s.blue
         @data.push(input)
+        @size = @size + 1
+        return @data
+    end
+
+    def delete(input)
+        @data = @data - [input]
+        @size = @size - 1
         return @data
     end
 
